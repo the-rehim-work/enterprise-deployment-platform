@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+@theme {
+    --color-steam-darkest: #0e1219;
+    --color-steam-dark: #171a21;
+    --color-steam-mid: #1b2838;
+    --color-steam-light: #2a475e;
+    --color-steam-lighter: #3d6c8e;
+    --color-steam-text: #c7d5e0;
+    --color-steam-text-dim: #8f98a0;
+    --color-steam-highlight: #66c0f4;
+    --color-steam-blue: #1a9fff;
+    --color-steam-green: #4c6b22;
+    --color-steam-bright-green: #a4d007;
+    --color-steam-sale: #4c6b22;
+
+    --color-background: #1b2838;
+    --color-foreground: #c7d5e0;
+    --color-surface: #171a21;
+    --color-surface-elevated: #1e2c3a;
+
+    --color-primary: #66c0f4;
+    --color-primary-foreground: #0e1219;
+    --color-primary-hover: #8ad4f8;
+    --color-primary-muted: rgba(102, 192, 244, 0.1);
+
+    --color-secondary: #2a475e;
+    --color-secondary-foreground: #c7d5e0;
+    --color-secondary-hover: #3d6c8e;
+
+    --color-accent: #a4d007;
+    --color-accent-foreground: #0e1219;
+    --color-accent-hover: #b8e60a;
+    --color-accent-muted: rgba(164, 208, 7, 0.1);
+
+    --color-muted: #2a475e;
+    --color-muted-foreground: #8f98a0;
+
+    --color-success: #a4d007;
+    --color-success-foreground: #0e1219;
+    --color-success-muted: rgba(164, 208, 7, 0.1);
+
+    --color-warning: #e5a825;
+    --color-warning-foreground: #0e1219;
+    --color-warning-muted: rgba(229, 168, 37, 0.1);
+
+    --color-error: #cd3333;
+    --color-error-foreground: #ffffff;
+    --color-error-muted: rgba(205, 51, 51, 0.1);
+
+    --color-info: #66c0f4;
+    --color-info-foreground: #0e1219;
+    --color-info-muted: rgba(102, 192, 244, 0.1);
+
+    --color-border: #2a3f55;
+    --color-border-strong: #3d6c8e;
+    --color-input: #2a3f55;
+    --color-ring: #66c0f4;
+    --color-card: #1e2c3a;
+    --color-card-foreground: #c7d5e0;
+    --color-overlay: rgba(0, 0, 0, 0.6);
+
+    --font-sans: 'Motiva Sans', Arial, Helvetica, sans-serif;
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+    --animate-fade-in: fade-in 0.3s ease-out;
+    --animate-slide-up: slide-up 0.3s ease-out;
+    --animate-spin: spin 1s linear infinite;
+    --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-up {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+    }
+}
+
+@layer base {
+    :root {
+        color-scheme: dark;
+    }
+
+    .light {
+        color-scheme: light;
+        --color-background: #e5e5e5;
+        --color-foreground: #1b2838;
+        --color-surface: #f5f5f5;
+        --color-surface-elevated: #ffffff;
+        --color-primary: #1a9fff;
+        --color-primary-foreground: #ffffff;
+        --color-primary-hover: #47b0ff;
+        --color-primary-muted: rgba(26, 159, 255, 0.1);
+        --color-secondary: #d2d2d2;
+        --color-secondary-foreground: #1b2838;
+        --color-secondary-hover: #bcbcbc;
+        --color-accent: #4c6b22;
+        --color-accent-foreground: #ffffff;
+        --color-accent-hover: #5c8128;
+        --color-accent-muted: rgba(76, 107, 34, 0.1);
+        --color-muted: #d2d2d2;
+        --color-muted-foreground: #5a6772;
+        --color-border: #c5c5c5;
+        --color-border-strong: #999999;
+        --color-input: #c5c5c5;
+        --color-ring: #1a9fff;
+        --color-card: #ffffff;
+        --color-card-foreground: #1b2838;
+        --color-overlay: rgba(0, 0, 0, 0.3);
+        --color-surface-elevated: #ffffff;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+        --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+        border-color: var(--color-border);
+    }
+
+    body {
+        @apply bg-background text-foreground antialiased;
+        font-family: var(--font-sans);
+    }
+}
+
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm px-4 py-2;
+    @apply text-sm font-medium whitespace-nowrap;
+    @apply transition-all duration-150 cursor-pointer;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+}
+
+@utility btn-primary {
+    @apply btn;
+    background: linear-gradient(to right, #47bfff 0%, #1a44c2 60%);
+    color: #ffffff;
+
+    &:hover {
+        background: linear-gradient(to right, #6ad1ff 0%, #2e5cd9 60%);
+    }
+}
+
+@utility btn-green {
+    @apply btn;
+    background: linear-gradient(to right, #a4d007 0%, #4c6b22 100%);
+    color: #ffffff;
+}
+
+@utility btn-secondary {
+    @apply btn bg-secondary text-secondary-foreground;
+}
+
+@utility btn-ghost {
+    @apply btn bg-transparent text-muted-foreground;
+}
+
+@utility input {
+    @apply flex h-9 w-full rounded-sm px-3 py-1.5 text-sm;
+    @apply bg-surface-elevated border border-input text-foreground;
+    @apply placeholder:text-muted-foreground;
+    @apply transition-colors duration-150;
+    @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring;
+}
+
+@utility card {
+    @apply rounded-sm border border-border bg-card text-card-foreground shadow-sm;
+}
+
+@utility card-hover {
+    @apply card transition-all duration-150 hover:shadow-md hover:border-border-strong;
+}
+
+@utility badge {
+    @apply inline-flex items-center rounded-sm px-2 py-0.5 text-xs font-medium;
+}
+
+@utility badge-primary {
+    @apply badge bg-primary-muted text-primary;
+}
+
+@utility badge-green {
+    @apply badge bg-accent-muted text-accent;
+}
+
+@utility divider {
+    @apply h-px w-full bg-border;
+}
+
+@utility skeleton {
+    @apply animate-pulse rounded-sm bg-muted;
+}

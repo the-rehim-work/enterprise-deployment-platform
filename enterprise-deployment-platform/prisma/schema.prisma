@@ -1,0 +1,103 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id           Int                @id @default(autoincrement())
+    username     String             @unique
+    email        String             @unique
+    passwordHash String             @map("password_hash")
+    role         String             @default("user")
+    displayName  String?            @map("display_name")
+    avatar       String?
+    bio          String?
+    createdAt    DateTime           @default(now()) @map("created_at")
+    games        UserGame[]
+    achievements UserAchievement[]
+    leaderboard  LeaderboardEntry[]
+
+    @@map("users")
+}
+
+model Game {
+    id           Int                @id @default(autoincrement())
+    title        String
+    description  String
+    genre        String
+    price        Float              @default(0)
+    releaseDate  String?            @map("release_date")
+    developer    String
+    publisher    String?
+    coverImage   String?            @map("cover_image")
+    headerImage  String?            @map("header_image")
+    createdAt    DateTime           @default(now()) @map("created_at")
+    users        UserGame[]
+    achievements Achievement[]
+    leaderboard  LeaderboardEntry[]
+
+    @@map("games")
+}
+
+model UserGame {
+    id          Int      @id @default(autoincrement())
+    userId      Int      @map("user_id")
+    gameId      Int      @map("game_id")
+    playtime    Int      @default(0)
+    purchasedAt DateTime @default(now()) @map("purchased_at")
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    game        Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+    @@map("user_games")
+}
+
+model Achievement {
+    id          Int               @id @default(autoincrement())
+    gameId      Int               @map("game_id")
+    title       String
+    description String
+    icon        String?
+    points      Int               @default(0)
+    createdAt   DateTime          @default(now()) @map("created_at")
+    game        Game              @relation(fields: [gameId], references: [id], onDelete: Cascade)
+    users       UserAchievement[]
+
+    @@map("achievements")
+}
+
+model UserAchievement {
+    id            Int         @id @default(autoincrement())
+    userId        Int         @map("user_id")
+    achievementId Int         @map("achievement_id")
+    unlockedAt    DateTime    @default(now()) @map("unlocked_at")
+    user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+    @@map("user_achievements")
+}
+
+model LeaderboardEntry {
+    id        Int      @id @default(autoincrement())
+    userId    Int      @map("user_id")
+    gameId    Int      @map("game_id")
+    score     Int      @default(0)
+    updatedAt DateTime @default(now()) @map("updated_at")
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+    @@map("leaderboard_entries")
+}
+
+model AuditLog {
+    id        Int      @id @default(autoincrement())
+    action    String
+    userId    Int?     @map("user_id")
+    meta      String?
+    createdAt DateTime @default(now()) @map("created_at")
+
+    @@map("audit_logs")
+}

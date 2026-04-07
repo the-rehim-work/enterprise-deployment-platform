@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=docker-secret-key-minimum-32-characters
+      - DATABASE_URL=file:./dev.db
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    volumes:
+      - ./prisma:/app/prisma
