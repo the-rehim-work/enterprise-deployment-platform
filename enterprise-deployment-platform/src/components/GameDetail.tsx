@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Game } from "@prisma/client";
 
 type Props = Omit<Game, "id" | "createdAt">;
@@ -26,9 +27,16 @@ export default function GameDetail({ title, description, genre, price, releaseDa
 
     return (
         <div className="animate-fade-in">
-            <div className="aspect-[16/5] rounded-sm overflow-hidden mb-6">
+            <div className="aspect-[16/5] rounded-sm overflow-hidden mb-6 relative">
                 {headerImage ? (
-                    <img src={headerImage} alt={title} className="w-full h-full object-cover" />
+                    <Image
+                        src={headerImage}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                        sizes="100vw"
+                        priority
+                    />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${color}44 0%, ${color}11 100%)` }}>
                         <div className="text-center">

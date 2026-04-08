@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Game } from "@prisma/client";
 
@@ -29,7 +30,13 @@ export default function GameCard({ id, title, genre, price, headerImage, develop
     <Link href={`/games/${id}`} className="group block bg-card rounded-sm overflow-hidden transition-all duration-150 hover:shadow-lg hover:scale-[1.02]">
       <div className="aspect-[460/215] overflow-hidden relative">
         {headerImage ? (
-          <img src={headerImage} alt={title} className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" />
+          <Image
+            src={headerImage}
+            alt={title}
+            fill
+            className="object-cover group-hover:opacity-90 transition-opacity"
+            sizes="(max-width: 768px) 100vw, 320px"
+          />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center" style={{ background: `linear-gradient(135deg, ${color}33 0%, ${color}11 100%)` }}>
             <div className="w-10 h-10 rounded-sm mb-2 flex items-center justify-center text-lg" style={{ backgroundColor: `${color}22`, color }}>
