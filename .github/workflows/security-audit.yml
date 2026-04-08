@@ -1,0 +1,33 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [dev, main]
+  schedule:
+    - cron: "0 0 * * 1"
+
+defaults:
+  run:
+    working-directory: enterprise-deployment-platform
+
+jobs:
+  audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: enterprise-deployment-platform/package-lock.json
+
+      - run: npm ci
+
+      - name: Audit Dependencies
+        run: npm audit --audit-level=high
+
+      - name: Check for known vulnerabilities
+        run: npx audit-ci@latest --high
